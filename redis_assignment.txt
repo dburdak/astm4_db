@@ -98,3 +98,40 @@ OK
 (integer) 103
 127.0.0.1:6379> 
 
+Bonus:
+127.0.0.1:6379> ZADD sales_leaderboard 5 "Milk"
+(integer) 1
+127.0.0.1:6379> ZADD sales_leaderboard 6 "Butter" 8 "Bread" 4 "Chocolate" 4 "IceCream"
+(integer) 4
+127.0.0.1:6379> ZRANGE sales_leaderboard 0 4 REV WITHSCORES
+ 1) "Bread"
+ 2) "8"
+ 3) "Butter"
+ 4) "6"
+ 5) "Milk"
+ 6) "5"
+ 7) "IceCream"
+ 8) "4"
+ 9) "Chocolate"
+10) "4"
+127.0.0.1:6379> ZRANGE sales_leaderboard 0 -1 REV WITHSCORES
+ 1) "Bread"
+ 2) "8"
+ 3) "Butter"
+ 4) "6"
+ 5) "Milk"
+ 6) "5"
+ 7) "IceCream"
+ 8) "4"
+ 9) "Chocolate"
+10) "4"
+127.0.0.1:6379> ZRANGE sales_leaderboard 0 REV WITHSCORES
+(error) ERR value is not an integer or out of range
+127.0.0.1:6379> ZRANGE sales_leaderboard 0 REV WITHSCORE
+(error) ERR syntax error
+127.0.0.1:6379> ZRANGE sales_leaderboard 0 0 REV WITHSCORE
+(error) ERR syntax error
+127.0.0.1:6379> ZRANGE sales_leaderboard 0 0 REV WITHSCORES
+1) "Bread"
+2) "8"
+127.0.0.1:6379> 
