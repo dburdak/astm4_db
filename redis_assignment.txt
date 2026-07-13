@@ -1,0 +1,100 @@
+127.0.0.1:6379> SET product:1:name "Nicole Kidman"
+OK
+127.0.0.1:6379> DEL product:1:name
+(integer) 1
+127.0.0.1:6379> SET product:1:name "Snikers"
+OK
+127.0.0.1:6379> SET product:1:price 50 
+OK
+127.0.0.1:6379> SET product:1:category "Food"
+OK
+127.0.0.1:6379> GET product:1:name
+"Snikers"
+127.0.0.1:6379> GET product:1:price
+"50"
+127.0.0.1:6379> GET product:1:category
+"Food"
+127.0.0.1:6379> HSET product:2 name "Twix" price "44.00" category "Food"
+(integer) 3
+127.0.0.1:6379> HGETALL product:2
+1) "name"
+2) "Twix"
+3) "price"
+4) "44.00"
+5) "category"
+6) "Food"
+127.0.0.1:6379> LPUSH recent_orders "ord_101" "ord_102" "ord_103" "ord_104" "ord_105" "ord_106" "ord_107" "ord_108" "ord_109" "ord_110"
+(integer) 10
+127.0.0.1:6379> LRANGE recent_orders 0 -1
+ 1) "ord_110"
+ 2) "ord_109"
+ 3) "ord_108"
+ 4) "ord_107"
+ 5) "ord_106"
+ 6) "ord_105"
+ 7) "ord_104"
+ 8) "ord_103"
+ 9) "ord_102"
+10) "ord_101"
+127.0.0.1:6379> LRANGE recent_orders -3 -1
+1) "ord_103"
+2) "ord_102"
+3) "ord_101"
+127.0.0.1:6379> LRANGE recent_orders 0 2
+1) "ord_110"
+2) "ord_109"
+3) "ord_108"
+127.0.0.1:6379> SADD product_tags "electronics" "sale" "new" "gadget" "wireless" "tech" "popular" "promo"
+(integer) 8
+127.0.0.1:6379> SADD product_tags "sale" "kitchen"
+(integer) 1
+127.0.0.1:6379> SMEMBERS product_tags
+1) "electronics"
+2) "sale"
+3) "new"
+4) "gadget"
+5) "wireless"
+6) "tech"
+7) "popular"
+8) "promo"
+9) "kitchen"
+127.0.0.1:6379> SISMEMBER produc_tags kitchen
+(integer) 0
+127.0.0.1:6379> SISMEMBER product_tags kitchen
+(integer) 1
+127.0.0.1:6379> SISMEMBER product_tags kitchen new
+(error) ERR wrong number of arguments for 'sismember' command
+127.0.0.1:6379> SISMEMBER product_tags "kitchen" "new"
+(error) ERR wrong number of arguments for 'sismember' command
+127.0.0.1:6379> SISMEMBERS product_tags "kitchen" "new"
+(error) ERR unknown command 'SISMEMBERS', with args beginning with: 'product_tags' 'kitchen' 'new' 
+127.0.0.1:6379> SADD product_tags "kitchen"
+(integer) 0
+127.0.0.1:6379> SISMEMBERS product_tags "new2"
+(error) ERR unknown command 'SISMEMBERS', with args beginning with: 'product_tags' 'new2' 
+127.0.0.1:6379> SISMEMBER product_tags "new2"
+(integer) 0
+127.0.0.1:6379> SET featured_product "Some Value" EX 60 
+OK
+127.0.0.1:6379> TTL featured_product
+(integer) 47
+127.0.0.1:6379> TTL featured_product
+(integer) 38
+127.0.0.1:6379> GET featured_product
+"Some Value"
+127.0.0.1:6379> TTL featured_product
+(integer) 27
+127.0.0.1:6379> TTL featured_product
+(integer) -2
+127.0.0.1:6379> GET featured_product
+(nil)
+127.0.0.1:6379> TTL featured_product
+(integer) -2
+127.0.0.1:6379> SET cache:product:1001 "Product: Snickers, Price: 50, Category: Food" EX 120
+OK
+127.0.0.1:6379> GET cache:product:1001
+"Product: Snickers, Price: 50, Category: Food"
+127.0.0.1:6379> TTL cache:product:1001
+(integer) 103
+127.0.0.1:6379> 
+
